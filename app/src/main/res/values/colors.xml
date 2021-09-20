@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background">#e3dae5</color>
+    <color name="type_normal">#A8A77A</color>
+    <color name="typeFire">#EE8130</color>
+    <color name="typeWater">#6390F0</color>
+    <color name="typeElectric">#F7D02C</color>
+    <color name="typeGrass">#7AC74C</color>
+    <color name="typeIce">#96D9D6</color>
+    <color name="typeFighting">#C22E28</color>
+    <color name="typePoison">#A33EA1</color>
+    <color name="typeGround">#E2BF65</color>
+    <color name="typeFlying">#A98FF3</color>
+    <color name="typePsychic">#F95587</color>
+    <color name="typeBug">#A6B91A</color>
+    <color name="typeRock">#B6A136</color>
+    <color name="typeGhost">#735797</color>
+    <color name="typeDragon">#6F35FC</color>
+    <color name="typeDark">#705746</color>
+    <color name="typeSteel">#B7B7CE</color>
+    <color name="typeFairy">#D685AD</color>
+    <color name="hp">#F7E800</color>
+    <color name="attack">@android:color/holo_red_dark</color>
+    <color name="defence">#0074CC</color>
+    <color name="special_attack">#cc66ff</color>
+    <color name="special_defence">#cc6699</color>
+    <color name="speed">#33cc33</color>
+</resources>
+
+
+
+
+
+
+
+
+
+
+
