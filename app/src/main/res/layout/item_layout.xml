@@ -1,26 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="240dp"
-    app:cardCornerRadius="12dp">
-    <ImageView
-        android:id="@+id/ivPokemonImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient"
-        android:contentDescription="@string/pokemon_image"
-        tools:src="@drawable/pokemon_placeholder" />
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tvPokemonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="16dp"
-        android:textAllCaps="true"
-        android:layout_marginBottom="16dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        tools:text="Pokemon Name" />
-</androidx.cardview.widget.CardView>
+    <data>
+
+        <import type="kotlin.jvm.functions.Function1" />
+
+        <import type="kotlin.Unit" />
+
+        <variable
+            name="pokemon"
+            type="com.example.pokedex.pojo.Pokemon" />
+
+        <variable
+            name="detail_call_back"
+            type="Function1&lt;Long,Unit>" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:onClick="@{(v) -> detail_call_back.invoke(pokemon.pokemonId)}"
+        app:cardCornerRadius="12dp">
+
+        <ImageView
+            android:id="@+id/ivPokemonImage"
+            loadImage="@{pokemon.imageUrl}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient"
+            android:contentDescription="@string/pokemon_image"
+            tools:src="@drawable/pokemon_placeholder" />
+
+        <TextView
+            android:id="@+id/tvPokemonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{pokemon.pokemonName}"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="Pokemon Name" />
+    </androidx.cardview.widget.CardView>
+</layout>

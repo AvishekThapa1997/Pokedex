@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.databinding.ItemLayoutBinding
 import com.example.pokedex.pojo.Pokemon
-import com.example.pokedex.util.loadImage
 import kotlinx.coroutines.*
 
 class PokemonAdapter(
@@ -40,58 +39,59 @@ class PokemonAdapter(
         RecyclerView.ViewHolder(itemLayoutBinding.root) {
         fun bindView(pokemon: Pokemon) {
             pokemon.run { ->
-                itemLayoutBinding.tvPokemonName.text = pokemonName
-                itemLayoutBinding.root.setOnClickListener {
-                    toDetailsFragment(pokemonId)
-                }
-                itemLayoutBinding.root.context.run {
-                    loadImage(
-                        imageUrl = imageUrl,
-                        containerView = itemLayoutBinding.ivPokemonImage,
-                        requiredPalette = true,
-                        checkPaletteExistence = {
-                            val paletteCode = when {
-                                memoryCachePalette.containsKey(pokemonId) -> {
-                                    memoryCachePalette[pokemonId]
-                                }
-                                else -> {
-                                    null
-                                }
-                            }
-                            if (paletteCode != null) {
-                                setCardColor(paletteCode, pokemonId)
-                                true
-                            } else {
-                                false
-                            }
-                        },
-                        coroutineScope = paletteJobScope,
-                        dominantColorCode = { colorCode ->
-                            setCardColor(colorCode, pokemonId)
-                        }
-                    )
-                }
-            }
-        }
-
-        private fun setCardColor(rgb: Int?, pokemonId: Long? = null) {
-            rgb?.let {
                 itemLayoutBinding.run {
-                    root.setCardBackgroundColor(rgb)
-                    pokemonId?.let {
-                        paletteGenerator(rgb, pokemonId)
-                    }
+                    this.pokemon = pokemon
+                    detailCallBack = toDetailsFragment
                 }
             }
+
+//                itemLayoutBinding.root.context.run {
+//                    loadImage(
+//                        imageUrl = imageUrl,
+//                        containerView = itemLayoutBinding.ivPokemonImage,
+//                        requiredPalette = true,
+//                        checkPaletteExistence = {
+//                            val paletteCode = when {
+//                                memoryCachePalette.containsKey(pokemonId) -> {
+//                                    memoryCachePalette[pokemonId]
+//                                }
+//                                else -> {
+//                                    null
+//                                }
+//                            }
+//                            if (paletteCode != null) {
+//                                setCardColor(paletteCode, pokemonId)
+//                                true
+//                            } else {
+//                                false
+//                            }
+//                        },
+//                        coroutineScope = paletteJobScope,
+//                        dominantColorCode = { colorCode ->
+//                            setCardColor(colorCode, pokemonId)
+//                        }
+//                    )
+//                }
         }
     }
 
-    object PokemonUtil : DiffUtil.ItemCallback<Pokemon>() {
-        override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon) =
-            oldItem.pokemonId == newItem.pokemonId
+//        private fun setCardColor(rgb: Int?, pokemonId: Long? = null) {
+//            rgb?.let {
+//                itemLayoutBinding.run {
+//                    root
+//                    pokemonId?.let {
+//                        paletteGenerator(rgb, pokemonId)
+//                    }
+//                }
+//            }
+//        }
+}
 
-        override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon) =
-            oldItem == newItem
+object PokemonUtil : DiffUtil.ItemCallback<Pokemon>() {
+    override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon) =
+        oldItem.pokemonId == newItem.pokemonId
 
-    }
+    override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon) =
+        oldItem == newItem
+
 }

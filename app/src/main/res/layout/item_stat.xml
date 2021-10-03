@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="stat_name"
+            type="String" />
+        <variable
+            name="stat"
+            type="String" />
+        <variable
+            name="progress"
+            type="Integer" />
+    </data>
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_marginBottom="8dp"
     android:layout_height="wrap_content">
@@ -10,6 +23,7 @@
         android:id="@+id/statProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:animateProgress="@{progress}"
         app:trackCornerRadius="28dp"
         app:trackThickness="32dp" />
 
@@ -19,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:paddingStart="16dp"
+        android:text="@{stat_name}"
         android:paddingEnd="0dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black" />
@@ -29,7 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end"
         android:paddingStart="16dp"
+        android:text="@{stat}"
         android:paddingEnd="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black" />
 </FrameLayout>
+</layout>

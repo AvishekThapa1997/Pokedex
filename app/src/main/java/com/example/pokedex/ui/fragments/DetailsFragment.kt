@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,8 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.pokedex.databinding.DetailsFragmentBinding
 
-import com.example.pokedex.util.Resource
-import com.example.pokedex.util.loadImage
 import com.example.pokedex.viewmodel.PokemonDetailsViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
@@ -24,8 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokedex.R
 import com.example.pokedex.adapter.PokemonStatAdapter
 import com.example.pokedex.pojo.parseTypeToColor
-import com.example.pokedex.util.capitalizeFirstLetter
-import com.example.pokedex.util.getColorCode
+import com.example.pokedex.util.*
 import java.util.*
 
 
@@ -52,6 +50,19 @@ class DetailsFragment : Fragment(R.layout.details_fragment) {
         }
         setRecyclerView()
         observePokemonDetails()
+        observeError()
+    }
+
+    private fun observeError() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            pokemonDetailsViewModel.error.collectLatest {
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().stringResource(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     private fun setRecyclerView() {
@@ -82,15 +93,15 @@ class DetailsFragment : Fragment(R.layout.details_fragment) {
                             containerView = pokemonImage
                         )
                         if (tvPokemonName.isVisible) {
-                            tvPokemonName.text = getString(
+                            pokemonName = getString(
                                 R.string.pokemon_name,
                                 details.pokemon.pokemonId,
                                 details.pokemon.pokemonName
                             )
                         }
                         if (physicalDetailsGroup.isVisible) {
-                            tvWeight.text = details.pokemonSubDetails?.weight.toString()
-                            tvHeight.text = details.pokemonSubDetails?.height.toString()
+                            height = details.pokemonSubDetails?.weight.toString()
+                            weight = details.pokemonSubDetails?.height.toString()
                         }
                         if (flowContainer.isVisible) {
                             flowContainer.setMaxElementsWrap(details.pokemonSubDetails?.pokemonTypes!!.size)

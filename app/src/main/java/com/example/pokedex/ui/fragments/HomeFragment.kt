@@ -68,38 +68,20 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             pokemonAdapter.loadStateFlow.collectLatest { loadState ->
                 homeFragmentBinding.run {
                     val refresh = loadState.mediator?.refresh
-                    loadStatusContainer.isVisible =
-                        refresh is LoadState.Loading || refresh is LoadState.Error
-                    loadingProgress.isVisible = refresh is LoadState.Loading
-                    btnRetry.isVisible = refresh is LoadState.Error
-                    tvLoadStatusMessage.isVisible = true
-                    if (refresh is LoadState.Loading || refresh is LoadState.Error) {
+//                    loadStatusContainer.isVisible =
+//                        refresh is LoadState.Error
+                    //swipe.isRefreshing = refresh is LoadState.Loading
+                     //loadingProgress.isVisible = refresh is LoadState.Loading && pokemonAdapter.itemCount <= 0
+//                    btnRetry.isVisible = refresh is LoadState.Error
+//                    tvLoadStatusMessage.isVisible = refresh is LoadState.Error
+                    if (refresh is LoadState.Error) {
                         tvLoadStatusMessage.text = if (refresh is LoadState.Loading) {
                             requireContext().stringResource(R.string.loading)
                         } else {
-                            (refresh as LoadState.Error).error.localizedMessage
-                                ?: requireContext().stringResource(R.string.loading)
+                            refresh.error.localizedMessage
+                                ?: requireContext().stringResource(R.string.something_went_wrong)
                         }
                     }
-//                    when (refresh) {
-//                        is LoadState.Loading -> {
-//                            loadStatusContainer.isVisible = true
-//                            btnRetry.isVisible = false
-//                            tvLoadStatusMessage.text =
-//
-//                                loadingProgress.isVisible = true
-//                        }
-//                        is LoadState.NotLoading -> {
-//                            loadStatusContainer.isVisible = false
-//                        }
-//                        is LoadState.Error -> {
-//                            loadStatusContainer.isVisible = true
-//                            loadingProgress.isVisible = false
-//                            btnRetry.isVisible = true
-//                            tvLoadStatusMessage.text = refresh.error.localizedMessage
-//                                ?: requireContext().stringResource(R.string.loading)
-//                        }
-//                    }
                 }
 
             }
@@ -114,11 +96,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     homeFragmentBinding.pokemonList.scrollToPosition(0)
                     pokemonViewModel.scrollToTop = false
                 }
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            pokemonAdapter.loadStateFlow.collectLatest {
-
             }
         }
     }
@@ -150,10 +127,11 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             itemAnimator?.changeDuration = 0
 
             adapter = pokemonAdapter.withLoadStateFooter(
-                    footer = PokemonLoadStateAdapter {
-                        pokemonAdapter.retry()
-                    },
-                )
+                footer = PokemonLoadStateAdapter {
+                    pokemonAdapter.retry()
+                }
+            )
+            //  adapter = pokemonAdapter
         }
     }
 }

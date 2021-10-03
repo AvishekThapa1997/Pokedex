@@ -20,7 +20,7 @@ fun PokemonStatDetails.parseStatToColor(): Int {
     }
 }
 
-fun PokemonStatDetails.arseStatToAbbr(): String {
+fun PokemonStatDetails.parseStatToAbbr(): String {
     return when (name.lowercase()) {
         "hp" -> "HP"
         "attack" -> "ATTACK"

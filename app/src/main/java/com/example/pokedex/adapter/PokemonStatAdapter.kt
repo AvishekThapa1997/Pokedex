@@ -4,14 +4,13 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.R
 import com.example.pokedex.databinding.ItemStatBinding
 import com.example.pokedex.pojo.PokemonStat
-import com.example.pokedex.pojo.arseStatToAbbr
+import com.example.pokedex.pojo.parseStatToAbbr
 import com.example.pokedex.pojo.parseStatToColor
 import com.example.pokedex.util.getColorCode
 
@@ -40,12 +39,13 @@ class PokemonStatAdapter :
 
         fun bind(pokemonStat: PokemonStat) {
             itemStatBinding.run {
-                tvStatsName.text = pokemonStat.pokemonStatDetails.arseStatToAbbr()
-                tvStat.text = pokemonStat.base_status.toString()
+                statName= pokemonStat.pokemonStatDetails.parseStatToAbbr()
+                stat = pokemonStat.base_status.toString()
+                progress = pokemonStat.base_status
                 statProgress.setIndicatorColor(_context.getColorCode(pokemonStat.pokemonStatDetails.parseStatToColor()))
-                ObjectAnimator.ofInt(statProgress, "progress", 0, pokemonStat.base_status)
-                    .setDuration(500L)
-                    .start()
+//                ObjectAnimator.ofInt(statProgress, "progress", 0, pokemonStat.base_status)
+//                    .setDuration(500L)
+//                    .start()
             }
         }
     }
