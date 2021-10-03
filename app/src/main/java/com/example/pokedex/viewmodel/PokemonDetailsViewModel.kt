@@ -24,7 +24,6 @@ class PokemonDetailsViewModel(
         if (id > 0) {
             pokeRepository.getPokemonById(id, onFetchFailed = {
                 viewModelScope.launch {
-                    Log.i("TAG", it?.localizedMessage)
                     _error.send(it)
                 }
             })

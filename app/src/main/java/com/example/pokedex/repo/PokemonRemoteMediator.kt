@@ -94,12 +94,4 @@ class PokemonRemoteMediator(
             MediatorResult.Error(exception)
         }
     }
-//    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Pokemon>): RemoteKey? {
-//        return state.pages.lastOrNull() {
-//            it.data.isNotEmpty()
-//        }?.data?.lastOrNull()
-//            ?.let { repo ->
-//
-//            }
-//    }
 }
